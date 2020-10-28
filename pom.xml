@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+    <modules>
+        <module>biz</module>
+        <module>boot</module>
+        <module>common</module>
+        <module>config</module>
+    </modules>
+    <groupId>com.zjut.factory.security</groupId>
+    <artifactId>factory-security</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>factory-security</name>
+    <description>Demo project for Spring security</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <factory-security-server.version>1.0.0-SNAPSHOT</factory-security-server.version>
+        <project-starter.version>1.0.0-SNAPSHOT</project-starter.version>
+        <project-common.version>1.0-SNAPSHOT</project-common.version>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+
+        <dom4j.version>1.6.1</dom4j.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--自定义starter或其他相关包 start-->
+            <dependency>
+                <groupId>com.zjut.spring.boot</groupId>
+                <artifactId>project-spring-boot-dependencies</artifactId>
+                <version>${project-starter.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.zjut.common</groupId>
+                        <artifactId>project-common</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.zjut.common</groupId>
+                <artifactId>project-common</artifactId>
+                <version>${project-common.version}</version>
+            </dependency>
+            <!--自定义starter或其他相关包 end-->
+
+            <!--子模块 start-->
+            <dependency>
+                <groupId>com.zjut.factory.security</groupId>
+                <artifactId>security-biz</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zjut.factory.security</groupId>
+                <artifactId>security-boot</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zjut.factory.security</groupId>
+                <artifactId>security-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zjut.factory.security</groupId>
+                <artifactId>security-config</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!--子模块 end-->
+
+            <!--第三方依赖 start-->
+            <!--解析xml-->
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>${dom4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+            </dependency>
+            <!--第三方依赖 end-->
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.yml</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.yml</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--下载的仓库-->
+    <repositories>
+        <repository>
+            <id>rdc-releases</id>
+            <url>https://repo.rdc.aliyun.com/repository/134225-release-yPqXef/</url>
+        </repository>
+        <repository>
+            <id>rdc-snapshots</id>
+            <url>https://repo.rdc.aliyun.com/repository/134225-snapshot-0sOQAO/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>
+                    interval:1
+                </updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <!--上传到该库中-->
+    <distributionManagement>
+        <repository>
+            <id>rdc-releases</id>
+            <url>https://repo.rdc.aliyun.com/repository/134225-release-yPqXef/</url>
+        </repository>
+        <snapshotRepository>
+            <id>rdc-snapshots</id>
+            <url>https://repo.rdc.aliyun.com/repository/134225-snapshot-0sOQAO/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>
